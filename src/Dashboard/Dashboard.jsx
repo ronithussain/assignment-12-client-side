@@ -1,0 +1,75 @@
+import { FaHome, FaUtensils, FaBars } from "react-icons/fa";
+import { NavLink, Outlet } from "react-router-dom";
+import { useState } from "react";
+
+const DashBoard = () => {
+    // TODO: get isAdmin value from the database
+    const isAdmin = true;
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    return (
+        <div className="flex flex-col md:flex-row">
+            {/* Sidebar Toggle Button for Small Screens */}
+            <button 
+                className="md:hidden p-4 text-2xl bg-orange-400 text-white"
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            >
+                <FaBars />
+            </button>
+
+            {/* Dashboard Sidebar */}
+            <div className={`absolute md:relative z-10 min-h-screen bg-orange-300 w-64 transition-all duration-300 
+                ${isSidebarOpen ? "block" : "hidden"} md:block`}
+            >
+                <ul className="menu w-full space-y-4 p-4">
+                    {
+                        isAdmin ?
+                            <>
+                                <li>
+                                    <NavLink to="/dashboard/addPost"
+                                        className={({ isActive }) => isActive ? "text-white font-bold bg-orange-500 p-2 rounded-lg flex items-center gap-2" : "font-medium text-xl flex items-center gap-2"}
+                                    >
+                                        <FaHome className="text-xl" />
+                                        ADD POST
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/myPost"
+                                        className={({ isActive }) => isActive ? "text-white font-bold bg-orange-500 p-2 rounded-lg flex items-center gap-2" : "font-medium text-xl flex items-center gap-2"}
+                                    >
+                                        <FaUtensils className=" text-xl" />
+                                        MY POST
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/myProfile"
+                                        className={({ isActive }) => isActive ? "text-white font-bold bg-orange-500 p-2 rounded-lg flex items-center gap-2" : "font-medium text-xl flex items-center gap-2"}
+                                    >
+                                        <FaUtensils className=" text-xl" />
+                                        MY PROFILE
+                                    </NavLink>
+                                </li>
+                            </>
+                            : null
+                    }
+
+                    {/* Shared Nav Links */}
+                    <div className="divider"></div>
+                    <li>
+                        <NavLink to="/" className="font-medium text-xl flex items-center gap-2">
+                            <FaHome className="text-xl" />
+                            Home
+                        </NavLink>
+                    </li>
+                </ul>
+            </div>
+
+            {/* Dashboard Content */}
+            <div className="flex-1 sm:p-12 p-3">
+                <Outlet />
+            </div>
+        </div>
+    );
+};
+
+export default DashBoard;
