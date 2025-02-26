@@ -6,7 +6,7 @@ import useNotification from "../hooks/useNotification";
 
 const Navbar = () => {
     const { user, signOutUser } = useAuth();
-    const [announcements] = useNotification();
+    const [posts] = useNotification();
 
 
     const handleLogout = () => {
@@ -22,7 +22,7 @@ const Navbar = () => {
     </>
     return (
         <>
-            <div className="fixed z-50  text-white  bg-opacity-80 backdrop-blur-md bg-gray-900/80 navbar sm:px-4 px-1">
+            <div className="fixed z-50  text-white  bg-opacity-80 backdrop-blur-md bg-black/20 navbar sm:px-4 px-1">
                 <div className="navbar-start">
                     <div className="dropdown ">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden ">
@@ -56,7 +56,7 @@ const Navbar = () => {
                     <div className="mr-4">
                         <li className="relative">
                             <FaBell className="sm:text-xl text-xs cursor-pointer hover:text-yellow-400 transition" />
-                            <span className="absolute -top-1 -right-2 bg-blue-500 text-xs px-1 rounded-full">{announcements.length}</span>
+                            <span className="absolute -top-1 -right-2 bg-blue-500 text-xs px-1 rounded-full">{posts.length}</span>
                         </li>
                     </div>
                     <div className=" hidden lg:flex">

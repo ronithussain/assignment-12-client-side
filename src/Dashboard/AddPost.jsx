@@ -108,7 +108,7 @@ const AddPost = () => {
 
                     <div>
                         <label className="block font-semibold mb-2">Author Image</label>
-                        <input type="file" {...register("image", { required: "Image is required" })} className="file-input file-input-bordered w-full" />
+                        <input type="file" {...register("image")} className="file-input file-input-bordered w-full" />
                         {errors.image && <p className="text-red-500 text-sm">{errors.image.message}</p>}
                     </div>
 

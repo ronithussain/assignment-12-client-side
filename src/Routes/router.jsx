@@ -11,6 +11,8 @@ import AddPost from "../Dashboard/AddPost";
 import MyPost from "../Dashboard/MyPost";
 import MyProfile from "../Dashboard/MyProfile";
 import MemberShip from "../pages/MemberShip";
+import PostDetails from "../pages/PostDetails";
+import PrivateRoute from "./PrivateRoute";
 
   export const router = createBrowserRouter([
     {
@@ -34,15 +36,19 @@ import MemberShip from "../pages/MemberShip";
             path: '/register',
             element: <Register></Register>,
         },
+        {
+            path: '/post-details/:id',
+            element: <PrivateRoute><PostDetails/></PrivateRoute>,
+        },
       ]
     },
     {
       path: 'dashboard',
-      element: <Dashboard></Dashboard>,
+      element: <PrivateRoute><Dashboard/></PrivateRoute>,
       children: [
         {
           path: 'addPost',
-          element: <AddPost></AddPost>
+          element: <PrivateRoute><AddPost/></PrivateRoute>
         },
         {
           path: 'myPost',

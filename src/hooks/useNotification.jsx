@@ -5,15 +5,15 @@ import useAxiosPublic from "./useAxiosPublic";
 const useNotification = () => {
     const axiosPublic = useAxiosPublic();
 
-    const { data: announcements = [] } = useQuery({
-        queryKey: ['announcements'],
+    const { data: posts = [] } = useQuery({
+        queryKey: ['posts'],
         queryFn: async () => {
-            const res = await axiosPublic.get('/announcements');
+            const res = await axiosPublic.get('/posts');
             return res.data;
         }
     });
 
-    return [announcements]
+    return [posts]
 };
 
 export default useNotification;
