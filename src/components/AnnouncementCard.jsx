@@ -82,14 +82,14 @@ const AnnouncementCard = ({ announcement }) => {
                 </p>
             </div>
             <div className="flex justify-center">
-      <Link
-        to={`/post-details/${_id}`}
-        className="px-6 py-3 text-gray-700 rounded-lg hover:text-blue-600 transition flex items-center gap-2 text-lg font-medium sm:text-base sm:px-4 sm:py-2"
-      >
-        View Post Details{" "}
-        <FaArrowRight className="text-gray-500 group-hover:text-blue-600 transition-transform transform group-hover:translate-x-1 duration-300" />
-      </Link>
-    </div>
+                <Link
+                    to={`/post-details/${_id}`}
+                    className="px-6 py-3 text-gray-700 rounded-lg hover:text-blue-600 transition flex items-center gap-2 text-lg font-medium sm:text-base sm:px-4 sm:py-2"
+                >
+                    View Post Details{" "}
+                    <FaArrowRight className="text-gray-500 group-hover:text-blue-600 transition-transform transform group-hover:translate-x-1 duration-300" />
+                </Link>
+            </div>
 
         </div>
     );

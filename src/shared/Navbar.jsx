@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { FaBell, FaSearch } from "react-icons/fa";
 import logoImg from '../assets/logo/connection-vector-logo-template.png'
-import useNotification from "../hooks/useNotification";
+// import useNotification from "../hooks/useNotification";
 
 const Navbar = () => {
     const { user, signOutUser } = useAuth();
-    const [posts] = useNotification();
+    // const [posts] = useNotification();
 
 
     const handleLogout = () => {
@@ -56,7 +56,7 @@ const Navbar = () => {
                     <div className="mr-4">
                         <li className="relative">
                             <FaBell className="sm:text-xl text-xs cursor-pointer hover:text-yellow-400 transition" />
-                            <span className="absolute -top-1 -right-2 bg-blue-500 text-xs px-1 rounded-full">{posts.length}</span>
+                            <span className="absolute -top-1 -right-2 bg-blue-500 text-xs px-1 rounded-full"> + 0</span>
                         </li>
                     </div>
                     <div className=" hidden lg:flex">

@@ -1,6 +1,7 @@
 import {
     createBrowserRouter,
   } from "react-router-dom";
+  
 import MainLayout from "../Layout/MainLayout";
 import Home from "../pages/Home";
 import ErrorPage from "../pages/ErrorPage";
@@ -11,8 +12,8 @@ import AddPost from "../Dashboard/AddPost";
 import MyPost from "../Dashboard/MyPost";
 import MyProfile from "../Dashboard/MyProfile";
 import MemberShip from "../pages/MemberShip";
-import PostDetails from "../pages/PostDetails";
 import PrivateRoute from "./PrivateRoute";
+import PostDetails from "../pages/PostDetailsSection/PostDetails";
 
   export const router = createBrowserRouter([
     {
@@ -26,7 +27,7 @@ import PrivateRoute from "./PrivateRoute";
         },
         {
             path: '/memberShip',
-            element: <MemberShip></MemberShip>
+            element: <PrivateRoute><MemberShip/></PrivateRoute>
         },
         {
             path: '/login',
