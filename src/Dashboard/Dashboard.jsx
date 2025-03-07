@@ -1,10 +1,11 @@
 import { FaHome, FaUtensils, FaBars, FaUsers } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import { useState } from "react";
+import useAdmin from "../hooks/useAdmin";
 
 const DashBoard = () => {
     // TODO: get isAdmin value from the database
-    const isAdmin = true;
+    const isAdmin = useAdmin();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
