@@ -28,10 +28,10 @@ const useMyPosts = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
 
-    // user?.email না থাকলে API কল হবে না
+   
     const { refetch, data: myPost = [] } = useQuery({
         queryKey: ['myPosts', user?.email], 
-        enabled: !!user?.email, // user.email থাকলে API কল হবে
+       
         queryFn: async () => {
             const res = await axiosSecure.get(`/myPosts?email=${user?.email}`);
             return res.data;

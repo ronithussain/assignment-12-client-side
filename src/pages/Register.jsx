@@ -4,11 +4,13 @@ import useAuth from "../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
 
 
 const Register = () => {
+    const axiosPublic = useAxiosPublic()
     const [showsPassword, setShowsPassword] = useState(false);
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -16,36 +18,50 @@ const Register = () => {
     const navigate = useNavigate();
 
     const from = location.state?.from?.pathname || '/';
-    console.log('in the location login page',location.state)
+    console.log('in the location login page', location.state)
 
     const onSubmit = data => {
         // console.log(data);
         handleRegister(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
+
                 console.log(loggedUser);
+
                 handleUpdateProfile(data.name, data.photoURL)
                     .then(result => {
-                        console.log(result)
-                        reset();
-                        Swal.fire({
-                            title: "User Login Successful.css",
-                            showclassName: {
-                                popup: `
-                                                animate__animated
-                                                animate__fadeInUp
-                                                animate__faster
-                                              `
-                            },
-                            hideclassName: {
-                                popup: `
-                                                animate__animated
-                                                animate__fadeOutDown
-                                                animate__faster
-                                              `
-                            }
-                        });
-                        navigate(from, { replace: true });
+                        // create user entry in the database starts here............
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email,
+                            image:data.photoURL,
+                        }
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log("user added to the database")
+                                    reset();
+                                    Swal.fire({
+                                        title: "User Login Successful.css",
+                                        showclassName: {
+                                            popup: `
+                                                        animate__animated
+                                                        animate__fadeInUp
+                                                        animate__faster
+                                                      `
+                                        },
+                                        hideclassName: {
+                                            popup: `
+                                                        animate__animated
+                                                        animate__fadeOutDown
+                                                        animate__faster
+                                                      `
+                                        }
+                                    });
+                                    navigate(from, { replace: true });
+                                }
+                            })
+
                     })
                     .catch(error => {
                         console.log('User updated failed!!!', error.message)

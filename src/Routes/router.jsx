@@ -14,6 +14,11 @@ import MyProfile from "../Dashboard/MyProfile";
 import MemberShip from "../pages/MemberShip";
 import PrivateRoute from "./PrivateRoute";
 import PostDetails from "../pages/PostDetailsSection/PostDetails";
+import ViewComments from "../Dashboard/ViewComments";
+import AdminProfile from "../Dashboard/AdminRoutes/AdminProfile";
+import ManageUsers from "../Dashboard/AdminRoutes/ManageUsers";
+import ReportedActivities from "../Dashboard/AdminRoutes/ReportedActivities";
+import MakeAnnouncement from "../Dashboard/AdminRoutes/MakeAnnouncement";
 
   export const router = createBrowserRouter([
     {
@@ -44,7 +49,7 @@ import PostDetails from "../pages/PostDetailsSection/PostDetails";
       ]
     },
     {
-      path: 'dashboard',
+      path: '/dashboard',
       element: <PrivateRoute><Dashboard/></PrivateRoute>,
       children: [
         {
@@ -53,11 +58,33 @@ import PostDetails from "../pages/PostDetailsSection/PostDetails";
         },
         {
           path: 'myPost',
-          element: <MyPost></MyPost>
+          element: <PrivateRoute><MyPost/></PrivateRoute>
+        },
+        {
+          path: "comments/:id",
+          element: <PrivateRoute><ViewComments /></PrivateRoute>
         },
         {
           path: 'myProfile',
           element: <MyProfile></MyProfile>
+        },
+
+        //admin routes start here---------------------------------
+        {
+          path: 'adminProfile',
+          element: <PrivateRoute><AdminProfile/></PrivateRoute>
+        },
+        {
+          path: 'manageUsers',
+          element: <PrivateRoute><ManageUsers/></PrivateRoute>
+        },
+        {
+          path: "reportedActivities",
+          element: <PrivateRoute><ReportedActivities /></PrivateRoute>
+        },
+        {
+          path: 'makeAnnouncement',
+          element: <MakeAnnouncement/>
         },
       ]
     },

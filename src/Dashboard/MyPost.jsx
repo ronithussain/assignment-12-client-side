@@ -1,7 +1,8 @@
 import Swal from "sweetalert2";
 import { axiosSecure } from "../hooks/useAxiosSecure";
 import useMyPosts from "../hooks/useMyPosts";
-import { FaTrash } from "react-icons/fa";
+import { FaComments, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 
 const MyPost = () => {
@@ -10,7 +11,6 @@ const MyPost = () => {
 
 
     const handleDelete = (id) => {
-        // console.log('deleted', id)
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -21,21 +21,21 @@ const MyPost = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
+                axiosSecure.delete(`/myPosts/${id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            refetch(); 
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
             }
-            // deleted cart item-------------
-            axiosSecure.delete(`/myPosts/${id}`)
-                .then(res => {
-                    if (res.data.deletedCount > 0) {
-                        refetch(); // deleted jeno ui te update hoy sejonno refetch call kore holo
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "Your file has been deleted.",
-                            icon: "success"
-                        });
-                    }
-                })
         });
-    }
+    };
+
     return (
         <div className="bg-base-300 px-6 py-6">
             {/* <SectionTitle subHeading="My Cart" heading="wanna add more?"></SectionTitle> */}
@@ -54,8 +54,9 @@ const MyPost = () => {
                                     #
                                 </th>
                                 <th>Item Image</th>
-                                <th>Item Name</th>
-                                <th>Price</th>
+                                <th>Post Title</th>
+                                <th>Total Votes</th>
+                                <th>Comments</th>
                                 <th>Action</th>
 
                             </tr>
@@ -71,21 +72,26 @@ const MyPost = () => {
                                             <div className="avatar">
                                                 <div className="mask mask-squircle h-12 w-12">
                                                     <img
-                                                        src={post.image}
+                                                        src={post.authorImage}
                                                         alt="Avatar Tailwind CSS Component" />
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        {post.name}
+                                        {post.postTitle}
                                     </td>
-                                    <td>{post.price}</td>
-                                    <th>
+                                    <td>{post.upVote}</td>
+                                    <td>
+                                        <Link to={`/dashboard/comments/${post._id}`} className="btn btn-primary">
+                                        <FaComments/>
+                                        </Link>
+                                    </td>
+                                    <td>
                                         <button
                                             onClick={() => handleDelete(post._id)}
                                             className="btn btn-ghost text-lg bg-orange-400 text-white"><FaTrash></FaTrash> </button>
-                                    </th>
+                                    </td>
                                 </tr>)
                             }
 
