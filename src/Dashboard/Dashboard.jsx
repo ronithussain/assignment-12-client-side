@@ -2,10 +2,12 @@ import { FaHome, FaUtensils, FaBars, FaUsers } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import { useState } from "react";
 import useAdmin from "../hooks/useAdmin";
+import { RxActivityLog } from "react-icons/rx";
+import { TfiAnnouncement } from "react-icons/tfi";
 
 const DashBoard = () => {
     // TODO: get isAdmin value from the database
-    const isAdmin = useAdmin();
+    const [isAdmin] = useAdmin();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
@@ -19,7 +21,7 @@ const DashBoard = () => {
             </button>
 
             {/* Dashboard Sidebar */}
-            <div className={`absolute md:relative z-10 min-h-screen bg-orange-300 w-80 transition-all duration-300 
+            <div className={`absolute md:relative z-10 min-h-screen bg-[#627288] w-80 transition-all duration-300 
                 ${isSidebarOpen ? "block" : "hidden"} md:block`}
             >
                 <ul className="menu w-full space-y-4 p-4">
@@ -28,7 +30,7 @@ const DashBoard = () => {
                             <>
                                 <li>
                                     <NavLink to="/dashboard/adminProfile"
-                                        className={({ isActive }) => isActive ? "text-white font-bold bg-orange-500 p-2 rounded-lg flex items-center gap-2" : "font-medium text-xl flex items-center gap-2"}
+                                        className={({ isActive }) => isActive ? "text-white font-bold bg-[#344152] p-2 rounded-lg flex items-center gap-2" : "font-medium text-xs sm:text-xl flex items-center gap-2"}
                                     >
                                         <FaHome className="text-xl" />
                                         ADMIN PROFILE
@@ -36,7 +38,7 @@ const DashBoard = () => {
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/manageUsers"
-                                        className={({ isActive }) => isActive ? "text-white font-bold bg-orange-500 p-2 rounded-lg flex items-center gap-2" : "font-medium text-xl flex items-center gap-2"}
+                                        className={({ isActive }) => isActive ? "text-white font-bold bg-[#344152] p-2 rounded-lg flex items-center gap-2" : "font-medium text-xs sm:text-xl flex items-center gap-2"}
                                     >
                                         <FaUsers className=" text-xl" />
                                         MANAGE USERS
@@ -44,17 +46,17 @@ const DashBoard = () => {
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/reportedActivities"
-                                        className={({ isActive }) => isActive ? "text-white font-bold bg-orange-500 p-2 rounded-lg flex items-center gap-2" : "font-medium text-xl flex items-center gap-2"}
+                                        className={({ isActive }) => isActive ? "text-white font-bold bg-[#344152] p-2 rounded-lg flex items-center gap-2" : "font-medium text-xs sm:text-xl flex items-center gap-2"}
                                     >
-                                        <FaUtensils className=" text-xl" />
+                                        <RxActivityLog className=" text-xl" />
                                         REPORTED ACTIVITIES
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/makeAnnouncement"
-                                        className={({ isActive }) => isActive ? "text-white font-bold bg-orange-500 p-2 rounded-lg flex items-center gap-2" : "font-medium text-xl flex items-center gap-2"}
+                                        className={({ isActive }) => isActive ? "text-white font-bold bg-[#344152] p-2 rounded-lg flex items-center gap-2" : "font-medium text-xs sm:text-xl flex items-center gap-2"}
                                     >
-                                        <FaUtensils className=" text-xl" />
+                                        <TfiAnnouncement className=" text-xl" />
                                         MAKE ANNOUNCEMENT
                                     </NavLink>
                                 </li>
@@ -63,7 +65,7 @@ const DashBoard = () => {
                             <>
                                 <li>
                                     <NavLink to="/dashboard/addPost"
-                                        className={({ isActive }) => isActive ? "text-white font-bold bg-orange-500 p-2 rounded-lg flex items-center gap-2" : "font-medium text-xl flex items-center gap-2"}
+                                        className={({ isActive }) => isActive ? "text-white font-bold bg-[#344152] p-2 rounded-lg flex items-center gap-2" : "font-medium text-xs sm:text-xl flex items-center gap-2"}
                                     >
                                         <FaHome className="text-xl" />
                                         ADD POST
@@ -71,7 +73,7 @@ const DashBoard = () => {
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/myPost"
-                                        className={({ isActive }) => isActive ? "text-white font-bold bg-orange-500 p-2 rounded-lg flex items-center gap-2" : "font-medium text-xl flex items-center gap-2"}
+                                        className={({ isActive }) => isActive ? "text-white font-bold bg-[#344152] p-2 rounded-lg flex items-center gap-2" : "font-medium text-xs sm:text-xl flex items-center gap-2"}
                                     >
                                         <FaUtensils className=" text-xl" />
                                         MY POST
@@ -79,7 +81,7 @@ const DashBoard = () => {
                                 </li>
                                 <li>
                                     <NavLink to="/dashboard/myProfile"
-                                        className={({ isActive }) => isActive ? "text-white font-bold bg-orange-500 p-2 rounded-lg flex items-center gap-2" : "font-medium text-xl flex items-center gap-2"}
+                                        className={({ isActive }) => isActive ? "text-white font-bold bg-[#344152] p-2 rounded-lg flex items-center gap-2" : "font-medium text-xs sm:text-xl flex items-center gap-2"}
                                     >
                                         <FaUtensils className=" text-xl" />
                                         MY PROFILE
@@ -91,7 +93,7 @@ const DashBoard = () => {
                     {/* Shared Nav Links */}
                     <div className="divider"></div>
                     <li>
-                        <NavLink to="/" className="font-medium text-xl flex items-center gap-2">
+                        <NavLink to="/" className="font-medium text-xs sm:text-xl flex items-center gap-2">
                             <FaHome className="text-xl" />
                             Home
                         </NavLink>

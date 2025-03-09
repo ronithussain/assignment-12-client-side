@@ -77,7 +77,7 @@ const AddPost = () => {
                 });
                 setTimeout(() => {
                     navigate('/');
-                }, 1500);
+                }, 1000);
             }
         }
     };

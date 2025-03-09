@@ -3,22 +3,33 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { FaTrash, FaUsers } from "react-icons/fa";
 import { useState } from "react";
+import ReactPaginate from "react-paginate";
 
 
 
 const ManageUsers = () => {
     const axiosSecure = useAxiosSecure();
     const [search, setSearch] = useState('');
+    const [currentPage, setCurrentPage] = useState(0);
+    const usersPerPage = 5;
 
 
-    const { data: users = [], refetch } = useQuery({
-        queryKey: ["users", search],
+    const { data: usersData = [], refetch } = useQuery({
+        queryKey: ["users", search, currentPage],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/users?search=${search}`);
+            const res = await axiosSecure.get(`/users?search=${search}&page=${currentPage}&limit=${usersPerPage}`);
             return res.data;
         }
     });
-    console.log(users)
+    console.log(usersData)
+
+    const users = usersData?.result || [];
+    const totalPages = usersData?.totalPages || 1;
+
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected);
+        refetch(); 
+    };
 
     const handleMakeAdmin = id => {
         axiosSecure.patch(`/users/admin/${id}`)
@@ -78,6 +89,9 @@ const ManageUsers = () => {
             }
         });
     };
+    console.log("Users Data:", usersData);
+console.log("Users Array:", users);
+
     return (
         <div>
             <h3 className='text-3xl'>Total Users: {users.length}</h3>
@@ -94,8 +108,8 @@ const ManageUsers = () => {
 
                     <table className="table ">
                         {/* head */}
-                        <thead className="bg-orange-300 border-4 border-orange-400">
-                            <tr>
+                        <thead className="bg-[#1D84B5] text-white/80">
+                            <tr >
                                 <th>
                                     #
                                 </th>
@@ -112,7 +126,7 @@ const ManageUsers = () => {
                             {
                                 users?.map((user, index) => <tr key={user._id}>
                                     <th>
-                                        {index + 1}
+                                        {index + 1 + currentPage * usersPerPage}
                                     </th>
                                     <td>
                                         <div className="flex items-center gap-3">
@@ -120,7 +134,7 @@ const ManageUsers = () => {
                                                 <div className="mask mask-squircle h-12 w-12">
                                                     <img
                                                         src={user.photoURL}
-                                                    // alt="Avatar Tailwind CSS Component"
+                                                    
                                                     />
                                                 </div>
                                             </div>
@@ -137,7 +151,7 @@ const ManageUsers = () => {
                                                 :
                                                 <button
                                                     onClick={() => handleMakeAdmin(user._id)}
-                                                    className="btn btn-ghost text-lg bg-orange-400 text-white">
+                                                    className="btn btn-ghost text-lg bg-[#33B3CA] text-white">
                                                     <FaUsers />
                                                 </button>
                                         }
@@ -149,7 +163,7 @@ const ManageUsers = () => {
                                                 :
                                                 <button
                                                     onClick={() => handleMakeSubscription(user._id)}
-                                                    className="btn btn-ghost text-lg bg-orange-400 text-white">
+                                                    className="btn btn-ghost text-lg bg-[#33B3CA] text-white">
                                                     Free
                                                 </button>
                                         }
@@ -157,7 +171,7 @@ const ManageUsers = () => {
                                     <td>
                                         <button
                                             onClick={() => handleDelete(user._id)}
-                                            className="btn btn-ghost text-lg bg-orange-400 text-white">
+                                            className="btn btn-ghost text-lg bg-[#EF433F] text-white">
                                             <FaTrash></FaTrash>
                                         </button>
                                     </td>
@@ -167,6 +181,21 @@ const ManageUsers = () => {
                         </tbody>
                     </table>
                 </div>
+            </div>
+            {/* Pagination */}
+            <div className="flex justify-center items-end mt-4">
+                <ReactPaginate
+                    previousLabel={"← Previous"}
+                    nextLabel={"Next →"}
+                    pageCount={totalPages}
+                    onPageChange={handlePageClick}
+                    containerClassName={"flex gap-3"}
+                    pageClassName={"px-3 py-1  rounded-md cursor-pointer"}
+                    activeClassName={"bg-[#EF433F] text-white"}
+                    previousClassName={"px-3 py-1 rounded-md cursor-pointer"}
+                    nextClassName={"px-3 py-1  rounded-md cursor-pointer"}
+                    disabledClassName={"opacity-50 cursor-not-allowed"}
+                />
             </div>
         </div>
     );
