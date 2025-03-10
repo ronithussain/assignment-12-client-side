@@ -26,7 +26,7 @@ console.log(posts)
     return (
         <div className="my-12">
             <div className="max-w-4xl mx-auto mt-5 pt-24 px-2">
-                <h2 className="sm:text-3xl text-xl text-center font-semibold text-gray-800 mb-4 uppercase">
+                <h2 className="sm:text-3xl text-base text-center font-semibold text-gray-800 mb-4 uppercase">
                     Welcome To Our Homepage
                 </h2>
 

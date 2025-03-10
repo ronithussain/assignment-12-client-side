@@ -4,6 +4,7 @@ import { useState } from "react";
 import useAdmin from "../hooks/useAdmin";
 import { RxActivityLog } from "react-icons/rx";
 import { TfiAnnouncement } from "react-icons/tfi";
+import { ImProfile } from "react-icons/im";
 
 const DashBoard = () => {
     // TODO: get isAdmin value from the database
@@ -32,7 +33,7 @@ const DashBoard = () => {
                                     <NavLink to="/dashboard/adminProfile"
                                         className={({ isActive }) => isActive ? "text-white font-bold bg-[#344152] p-2 rounded-lg flex items-center gap-2" : "font-medium text-xs sm:text-xl flex items-center gap-2"}
                                     >
-                                        <FaHome className="text-xl" />
+                                        <ImProfile className="text-xl" />
                                         ADMIN PROFILE
                                     </NavLink>
                                 </li>

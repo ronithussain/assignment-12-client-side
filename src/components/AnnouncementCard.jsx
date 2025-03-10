@@ -58,33 +58,33 @@ const AnnouncementCard = ({ announcement }) => {
             <div className="divider"></div>
             {/* Action Buttons */}
             <div className="flex justify-between items-center">
-                <div className="flex sm:gap-x-3">
+                <div className="flex sm:gap-x-3 gap-x-1">
                     <button
                         onClick={() => likeMutation.mutate()}
-                        className={`flex items-center gap-1 px-3 py-1 rounded-md transition-all 
+                        className={`flex items-center gap-1 px-1 sm:px-3 py-1 rounded-md transition-all 
                         ${upVoters?.includes(user?.email) ? "bg-green-100 text-green-600" : "text-gray-600 hover:bg-gray-200"}`}
                         disabled={likeMutation.isLoading || downVoters?.includes(user?.email)}
                     >
-                        <FaThumbsUp className="text-lg" /> {upVote}
+                        <FaThumbsUp className="text-xs sm:text-lg" /> {upVote}
                     </button>
 
                     <button
                         onClick={() => dislikeMutation.mutate()}
-                        className={`flex items-center gap-1 px-3 py-1 rounded-md transition-all 
+                        className={`flex items-center gap-x-1 px-1 sm:px-3 py-1 rounded-md transition-all 
                         ${downVoters?.includes(user?.email) ? "bg-red-100 text-red-600" : "text-gray-600 hover:bg-gray-200"}`}
                         disabled={dislikeMutation.isLoading || upVoters?.includes(user?.email)}
                     >
-                        <FaThumbsDown className="text-lg" /> {downVote}
+                        <FaThumbsDown className="text-xs sm:text-lg" /> {downVote}
                     </button>
                 </div>
-                <p className="text-gray-500 text-sm">
+                <p className="text-gray-500 text-xs sm:text-sm">
                     {createdAt ? formatDistanceToNow(new Date(createdAt), { addSuffix: true }) : "Just now"}
                 </p>
             </div>
             <div className="flex justify-center">
                 <Link
                     to={`/post-details/${_id}`}
-                    className="px-6 py-3 text-gray-700 rounded-lg hover:text-blue-600 transition flex items-center gap-2 text-lg font-medium sm:text-base sm:px-4 sm:py-2"
+                    className="px-6 py-3 text-gray-700 rounded-lg hover:text-blue-600 transition flex items-center gap-2 text-xs font-medium sm:text-base sm:px-4 sm:py-2"
                 >
                     View Post Details{" "}
                     <FaArrowRight className="text-gray-500 group-hover:text-blue-600 transition-transform transform group-hover:translate-x-1 duration-300" />
