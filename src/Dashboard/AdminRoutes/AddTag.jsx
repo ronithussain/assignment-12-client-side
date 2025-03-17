@@ -38,7 +38,7 @@ const AddTag = () => {
                 <input
                     type="text"
                     {...register("tag", { required: true })}
-                    className="border-gray-200 p-2 rounded w-full"
+                    className="border-gray-200 p-2 rounded w-full bg-gradient-to-r from-slate-300 to-slate-100"
                     placeholder="Enter a tag..."
                 />
                 <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
@@ -49,7 +49,7 @@ const AddTag = () => {
                 <h3 className="text-lg font-semibold mt-4">Available Tags</h3>
                 <ul>
                     {fetchedTags.map((tag, index) => (
-                        <li key={index} className="bg-gray-200 p-2 rounded mt-1">
+                        <li key={index} className="bg-gradient-to-r from-slate-300 to-slate-100 p-2 rounded mt-1">
                             {tag.tag}
                         </li>
                     ))}

@@ -61,8 +61,8 @@ import MakeAnnouncement from "../Dashboard/AdminRoutes/MakeAnnouncement";
           element: <PrivateRoute><MyPost/></PrivateRoute>
         },
         {
-          path: "comments/:id",
-          element: <PrivateRoute><ViewComments /></PrivateRoute>
+          path: "comments/:postId",
+          element: <ViewComments />
         },
         {
           path: 'myProfile',

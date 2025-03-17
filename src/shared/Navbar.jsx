@@ -4,10 +4,12 @@ import { FaBell, FaSearch } from "react-icons/fa";
 import logoImg from '../assets/logo/connection-vector-logo-template.png';
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 const Navbar = () => {
     const { user, signOutUser } = useAuth();
     const axiosPublic = useAxiosPublic();
+    const [search, setSearch] = useState("");
 
     // Fetch Announcements
     const { data: announcements = [] } = useQuery({
@@ -55,7 +57,9 @@ const Navbar = () => {
                 <div className="relative w-[100%] mr-4 sm:mr-0">
                     <input
                         type="text"
-                        placeholder="Search..."
+                        placeholder="Search by title..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                         className="bg-gray-800/50 backdrop-blur-2xl input input-md w-full pl-10 pr-4 py-2 rounded-lg border border-gray-700 focus:ring-2 focus:ring-gray-800 focus:border-gray-700 shadow-md"
                     />
                     <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">

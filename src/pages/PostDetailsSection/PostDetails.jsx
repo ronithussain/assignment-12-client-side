@@ -8,18 +8,14 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import ShareButton from "./ShareButton";
 import CommentSection from "./CommentSection";
 
-
-
 const PostDetails = () => {
     const { id } = useParams();
     const axiosPublic = useAxiosPublic();
     const queryClient = useQueryClient();
     const { user } = useAuth();
-    // const shareUrl = `${window.location.origin}/post/${id}`;
-
 
     // Fetch Post Details
-    const { data: post, isLoading, isError, refetch} = useQuery({
+    const { data: post, isLoading, isError,  } = useQuery({
         queryKey: ["post", id],
         queryFn: async () => {
             const res = await axiosPublic.get(`/post-details/${id}`);
@@ -27,33 +23,26 @@ const PostDetails = () => {
         },
     });
 
-
     // Like Mutation
     const likeMutation = useMutation({
         mutationFn: async () => axiosPublic.patch(`/posts/like/${id}`, { userEmail: user?.email }),
-        onSuccess: () => queryClient.invalidateQueries(["posts", id]),
+        onSuccess: () => queryClient.invalidateQueries(["post", id]),
     });
 
     // Dislike Mutation
     const dislikeMutation = useMutation({
         mutationFn: async () => axiosPublic.patch(`/posts/dislike/${id}`, { userEmail: user?.email }),
-        onSuccess: () => queryClient.invalidateQueries(["posts", id]),
+        onSuccess: () => queryClient.invalidateQueries(["post", id]),
     });
-
-  
 
     if (isLoading) return <LoadingSpinner />;
     if (isError || !post) return <p className="text-center text-red-500">Something went wrong!</p>;
 
-
-
-    console.log("Requested Post ID:", id);
-
-
     return (
-        <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg my-44">
+        <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg my-20">
+            {/* Author Info */}
             <div className="flex items-center gap-3">
-                <img src={post?.authorImage} alt="Author" className="w-12 h-12 rounded-full" />
+                <img src={post?.authorImage} alt="Author" className="w-12 h-12 rounded-full border-2 border-gray-300" />
                 <div>
                     <h2 className="text-lg font-semibold">{post?.authorName}</h2>
                     <p className="text-gray-500 text-sm">
@@ -62,40 +51,46 @@ const PostDetails = () => {
                 </div>
             </div>
 
-            <h1 className="text-2xl font-bold mt-4">{post?.postTitle}</h1>
-            <p className="text-gray-700 mt-2">{post?.postDescription}</p>
+            {/* Post Content */}
+            <h1 className="text-3xl font-bold mt-5">{post?.postTitle}</h1>
+            <p className="text-gray-700 mt-3 leading-relaxed">{post?.postDescription}</p>
 
-            <div className="mt-2 flex gap-2">
-                <p>{post?.tag}</p>
-            </div>
+            {/* Tags Section */}
+            {post?.tag && (
+                <div className="mt-3">
+                    <span className="text-blue-600 font-medium bg-blue-100 px-3 py-1 rounded-full">{post.tag}</span>
+                </div>
+            )}
+
             {/* Action Buttons */}
-            <div className="flex justify-between items-center mt-3">
-                <div className="flex sm:gap-x-3">
+            <div className="flex justify-between items-center mt-6">
+                {/* Like & Dislike Buttons */}
+                <div className="flex gap-3">
                     <button
                         onClick={() => likeMutation.mutate()}
-                        className={`flex items-center gap-1 px-3 py-1 rounded-md transition-all 
-                                    ${post?.upVoters?.includes(user?.email) ? "bg-green-100 text-green-600" : "text-gray-600 hover:bg-gray-200"}`}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-300 
+                                    ${post?.upVoters?.includes(user?.email) ? "bg-green-200 text-green-700" : "text-gray-600 hover:bg-gray-200"}`}
                         disabled={likeMutation.isLoading || post?.downVoters?.includes(user?.email)}
                     >
-                        <FaThumbsUp className="text-lg" /> {post?.upVote}
+                        <FaThumbsUp className="text-xl" /> {post?.upVote}
                     </button>
 
                     <button
                         onClick={() => dislikeMutation.mutate()}
-                        className={`flex items-center gap-1 px-3 py-1 rounded-md transition-all 
-                                    ${post?.downVoters?.includes(user?.email) ? "bg-red-100 text-red-600" : "text-gray-600 hover:bg-gray-200"}`}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all duration-300 
+                                    ${post?.downVoters?.includes(user?.email) ? "bg-red-200 text-red-700" : "text-gray-600 hover:bg-gray-200"}`}
                         disabled={dislikeMutation.isLoading || post?.upVoters?.includes(user?.email)}
                     >
-                        <FaThumbsDown className="text-lg" /> {post?.downVote}
+                        <FaThumbsDown className="text-xl" /> {post?.downVote}
                     </button>
                 </div>
-                <div className="mt-4">
-                <ShareButton postId={post._id} title={post.title} />
-                </div>
+
+                {/* Share Button */}
+                <ShareButton postId={post._id} title={post.postTitle} />
             </div>
+
             {/* Comment Section */}
-            <CommentSection postId={id} comments={post?.comments} refetch={refetch} />
-           
+            <CommentSection postId={post._id}  user={user} />
         </div>
     );
 };

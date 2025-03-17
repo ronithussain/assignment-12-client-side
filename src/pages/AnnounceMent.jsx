@@ -14,7 +14,7 @@ const AnnounceMent = () => {
 
     
  
-console.log(posts)
+
     if (isLoading) return <LoadingSpinner />;
 
     // Pagination Logic

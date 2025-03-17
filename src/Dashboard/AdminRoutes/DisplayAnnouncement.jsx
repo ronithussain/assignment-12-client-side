@@ -39,8 +39,8 @@ const DisplayAnnouncement = () => {
                                 <div className="p-3 sm:p-6">
                                     <h3 className="sm:text-xl font-semibold text-gray-800">{announcement.title}</h3>
                                     <p className="text-gray-600 my-4 sm:text-base text-xs">{announcement.description}</p>
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center">
+                                    <div className="flex  lg:flex-col lg:items-start md:flex-row flex-col md:items-center md:gap-x-6">
+                                        <div className="flex items-center ">
                                             <img
                                                 src={announcement.authorImage}
                                                 alt="Author"

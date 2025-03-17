@@ -1,19 +1,30 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
-import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
+import LoadingSpinner from "../../shared/LoadingSpinner";
 
-const CommentSection = ({ postId, comments, refetch }) => {
-    const { user } = useAuth();
-    const axiosPublic = useAxiosPublic();
+const CommentSection = ({ postId, user }) => {
     const [newComment, setNewComment] = useState("");
+    const queryClient = useQueryClient();
 
-    // Comment Mutation with refetch
+
+    const { data: comments = [], isLoading } = useQuery({
+        queryKey: ['comments', postId],
+        queryFn: async () => {
+            const res = await axios.get(`http://localhost:7000/comments/${postId}`)
+            console.log("Fetched Comments:", res.data);
+            return res.data;
+        }
+    });
+    console.log(postId)
+
+
     const commentMutation = useMutation({
         mutationFn: async (commentText) => {
-            const res = await axiosPublic.post(`/post/comment/${postId}`, {
-                userId: user?.uid,
+            const res = await axios.post("http://localhost:7000/comments", {
+                postId,
+                userEmail: user?.email,
                 userName: user?.displayName,
                 userImage: user?.photoURL,
                 comment: commentText,
@@ -21,59 +32,80 @@ const CommentSection = ({ postId, comments, refetch }) => {
             return res.data;
         },
         onSuccess: () => {
-            refetch(); // Fetch updated comments
+            console.log("Comment added successfully");
+            queryClient.invalidateQueries(["comments", postId]); // Re-fetch comments
             setNewComment(""); // Clear input field
         },
-        onError: (error) => {
-            console.error("Failed to add comment:", error);
-        }
     });
 
+    //  Handle Form Submit
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (newComment.trim() === "") return;
+        commentMutation.mutate(newComment);
+    };
+    console.log(newComment)
+
+    if (isLoading) {
+        return <LoadingSpinner></LoadingSpinner>;
+    }
     return (
         <div className="mt-6">
-            <h3 className="text-lg font-semibold mb-2">Comments: ({comments?.length || 0})</h3>
+
+            <h3 className="text-lg font-semibold mb-2">Comments: ( {comments?.length || 0} )</h3>
 
             {/* Comment Input Section */}
             {user ? (
-                <div className="flex flex-wrap sm:flex-nowrap gap-2 mb-4">
+                <form onSubmit={handleSubmit} className="flex items-center gap-2">
                     <input
                         type="text"
-                        className="border border-gray-300 rounded-lg px-3 py-2 flex-grow w-full sm:w-auto"
-                        placeholder="Write a comment..."
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
+                        placeholder="Write a comment..."
+                        className="flex-1 p-2 border-gray-300 rounded-lg"
                     />
                     <button
-                        onClick={() => commentMutation.mutate(newComment)}
-                        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition w-full sm:w-auto"
-                        disabled={!newComment.trim() || commentMutation.isLoading}
+                        type="submit"
+                        className="bg-blue-500 text-white px-3 py-2 rounded-lg"
+                        disabled={commentMutation.isLoading}
                     >
-                        {commentMutation.isLoading ? "Posting..." : "Comment"}
+                        {commentMutation.isLoading ? "Posting..." : "Post"}
                     </button>
-                </div>
+                </form>
             ) : (
-                <p className="text-red-500">Please log in to comment.</p>
+                <p className="text-gray-500">Login to add a comment.</p>
             )}
 
             {/* Display Comments */}
-            <div className="space-y-3">
+            <div className="space-y-3 mt-2 sm:mt-4">
                 {comments?.map((comment, index) => (
-                    <div key={index} className="flex flex-col sm:flex-row gap-3 items-start bg-gray-100 p-3 rounded-lg">
+                    <div
+                        key={index}
+                        className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start bg-gray-100 dark:bg-gray-800 p-4 sm:p-5 rounded-lg shadow-md transition-all"
+                    >
+                        {/* Profile Image */}
                         <img
                             src={comment.userImage}
                             alt={comment.userName}
-                            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"
+                            className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full object-cover border border-gray-300 dark:border-gray-700"
                         />
+
+                        {/* Comment Content */}
                         <div className="flex-1">
-                            <h4 className="font-semibold text-sm sm:text-base">{comment.userName}</h4>
-                            <p className="text-gray-700 text-sm sm:text-base">{comment.comment}</p>
-                            <p className="text-gray-500 text-xs sm:text-sm">
-                                {formatDistanceToNow(new Date(comment.date), { addSuffix: true })}
+                            <h4 className="font-semibold text-sm sm:text-base md:text-lg text-gray-900 dark:text-white">
+                                {comment.userName}
+                            </h4>
+                            <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base md:text-lg">
+                                {comment.comment}
+                            </p>
+                            <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm md:text-base mt-1 flex justify-end">
+                                 {formatDistanceToNow(new Date(comment.date), { addSuffix: true })}
                             </p>
                         </div>
                     </div>
                 ))}
             </div>
+
         </div>
     );
 };
