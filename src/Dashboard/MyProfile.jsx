@@ -25,35 +25,31 @@ const MyProfile = () => {
 
     return (
         <>
-            <div className="p-6 max-w-xl mx-auto flex flex-col justify-center items-center bg-white rounded-lg shadow-lg">
+            <div className="p-6 max-w-7xl mx-auto flex flex-col justify-center items-center bg-white rounded-lg shadow-lg">
                 {/* User Info */}
-                <div className="flex items-center space-x-4">
-                    <img className="w-20 h-20 rounded-full border-2 border-gray-300" src={profile.image} alt={profile.name} />
-                    <div>
-                        <h2 className="text-2xl font-semibold text-gray-800">{profile.name}</h2>
-                        <p className="text-gray-600 text-sm">{profile.email}</p>
-                    </div>
+                {/* Profile Information */}
+                <div className="flex flex-col items-center">
+                    <img src={profile.image} alt={profile.name} className="sm:w-32 sm:h-32 rounded-full border-4 border-gray-300" />
+                    <h2 className="text-xs sm:text-3xl font-bold mt-4 text-gray-800">Hi,  {profile.name} Welcome Back!</h2>
+                    <p className="text-xs sm:text-lg text-gray-600">{profile.email}</p>
                 </div>
+                <div className="divider"></div>
+                
 
                 {/* Badges */}
-                <div className="mt-6">
+                <div className="sm:my-6 my-2">
                     {profile.isMember ? (
-                        <span className="bg-yellow-500 text-white px-4 py-2 rounded-full text-sm font-semibold">🏆 Gold Badge</span>
+                        <span className="bg-yellow-400 text-white px-4 py-2 rounded-full text-sm font-semibold">🏆 Gold Badge</span>
                     ) : (
-                        <span className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold">🥉 Bronze Badge</span>
+                        <span className="bg-orange-400 text-white px-4 py-2 rounded-full text-sm font-semibold">🥉 Bronze Badge</span>
                     )}
-                </div>
-
-                {/* Responsive Design */}
-                <div className="mt-6 md:flex md:items-center md:space-x-6">
-                    {/* More info or buttons can go here */}
                 </div>
             </div>
 
 
 
             {/* Recent Posts */}
-            <div className="mt-6">
+            <div className="lg:mt-8 md:mt-6 mt-3">
                 <h3 className="text-2xl font-semibold mb-4 text-gray-800">Recent Posts</h3>
                 {profile.results.length === 0 ? (
                     <p className="text-gray-500">No recent posts</p>

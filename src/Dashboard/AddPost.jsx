@@ -1,7 +1,7 @@
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
@@ -38,7 +38,6 @@ const AddPost = () => {
 
     // Form Submission Handler
     const onSubmit = async (data) => {
-
         // image upload to imgbb and then get an url
         console.log(data);
         const imageFile = { image: data.image[0] }
@@ -91,12 +90,11 @@ const AddPost = () => {
                     <p className="text-red-500 font-semibold mb-4">
                         You have reached the post limit! Become a member to add more posts.
                     </p>
-                    <button
-                        onClick={() => navigate("/membership")}
+                    <Link to="/membership"
                         className="btn btn-primary text-lg"
                     >
                         Become a Member
-                    </button>
+                    </Link>
                 </div>
             ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

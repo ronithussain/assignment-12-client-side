@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import LoadingSpinner from "../shared/LoadingSpinner";
 import Modal from "react-modal";
 import { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 Modal.setAppElement("#root");
 
 const ViewComments = () => {
     const { postId } = useParams();
+    const axiosSecure = useAxiosSecure();
     const [showModalComment, setShowModalComment] = useState(null);
     const [feedbacks, setFeedbacks] = useState({});
     const [reportedComments, setReportedComments] = useState({});
@@ -30,7 +31,7 @@ const ViewComments = () => {
         const selectedFeedback = feedbacks[commentId]; // Get the feedback for the specific comment
         if (selectedFeedback) { //jodi feedback select kore taholey se report korte parbe!
             try {
-                await axios.post('http://localhost:7000/report', { commentId, feedback: selectedFeedback });
+                await axiosSecure.post('/report', { commentId, feedback: selectedFeedback });
 
                 // Update report status for that specific comment
                 setReportedComments((prev) => ({
@@ -54,10 +55,10 @@ const ViewComments = () => {
     const { data: comments = [], error, isLoading } = useQuery({
         queryKey: ['comments', postId],
         queryFn: async () => {
-            const res = await axios.get(`http://localhost:7000/comments/${postId}`);
+            const res = await axiosSecure.get(`/comments/${postId}`);
             const commentsWithStatus = res.data.map(comment => ({
                 ...comment,
-                reportStatus: false 
+                reportStatus: false
             }));
             setCommentsWithReportStatus(commentsWithStatus);
             return res.data;
@@ -104,7 +105,7 @@ const ViewComments = () => {
                                             {comment.comment.length > 20 ? (
                                                 <>
                                                     {comment.comment.substring(0, 20)}...
-                                                    <button 
+                                                    <button
                                                         onClick={() => setShowModalComment(comment.comment)}
                                                         className="text-blue-600 ml-2 hover:underline"
                                                     >
@@ -116,7 +117,7 @@ const ViewComments = () => {
 
                                         {/* Feedback Dropdown chatGPT help niye korsi but puropuri bujhi nai. */}
                                         <td className="px-6 py-4 text-sm text-gray-700">
-                                            <select 
+                                            <select
                                                 className="border border-gray-300 rounded-md py-1 px-2"
                                                 value={feedbacks[comment._id] || ""}
                                                 onChange={(e) => handleFeedbackChange(e, comment._id)}
@@ -134,10 +135,10 @@ const ViewComments = () => {
                                                 onClick={() => handleReportClick(comment._id)}
                                                 disabled={!feedbacks[comment._id] || reportedComments[comment._id]}
                                                 className={`px-4 py-2 rounded transition 
-                                                    ${reportedComments[comment._id] 
-                                                        ? "bg-gray-400 text-gray-600 cursor-not-allowed" 
-                                                        : feedbacks[comment._id] 
-                                                            ? "bg-red-500 hover:bg-red-600 text-white cursor-pointer" 
+                                                    ${reportedComments[comment._id]
+                                                        ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                                                        : feedbacks[comment._id]
+                                                            ? "bg-red-500 hover:bg-red-600 text-white cursor-pointer"
                                                             : "bg-gray-300 text-gray-500 cursor-not-allowed"}`
                                                 }
                                             >

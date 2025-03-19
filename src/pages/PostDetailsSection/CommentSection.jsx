@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import LoadingSpinner from "../../shared/LoadingSpinner";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const CommentSection = ({ postId, user }) => {
     const [newComment, setNewComment] = useState("");
     const queryClient = useQueryClient();
+    const axiosPublic = useAxiosPublic();
 
 
     const { data: comments = [], isLoading } = useQuery({
         queryKey: ['comments', postId],
         queryFn: async () => {
-            const res = await axios.get(`http://localhost:7000/comments/${postId}`)
+            const res = await axiosPublic.get(`/comments/${postId}`)
             console.log("Fetched Comments:", res.data);
             return res.data;
         }
@@ -22,7 +23,7 @@ const CommentSection = ({ postId, user }) => {
 
     const commentMutation = useMutation({
         mutationFn: async (commentText) => {
-            const res = await axios.post("http://localhost:7000/comments", {
+            const res = await axiosPublic.post("/comments", {
                 postId,
                 userEmail: user?.email,
                 userName: user?.displayName,

@@ -94,7 +94,7 @@ const Navbar = () => {
                                 <div tabIndex={0} className="avatar cursor-pointer">
                                     <img src={user.photoURL} alt="Profile" className="w-12 h-12 sm:w-8 sm:h-8 rounded-full p-1 bg-gray-700" />
                                 </div>
-                                <ul tabIndex={0} className="dropdown-content menu shadow bg-gray-900/80 rounded-box w-40 mt-2">
+                                <ul tabIndex={0} className="dropdown-content menu shadow bg-gray-900/80 rounded-box w-40 mt-2 ">
                                     <li className="font-bold text-center">{user.displayName}</li>
                                     <li><Link to="/dashboard">Dashboard</Link></li>
                                     <li><button onClick={handleLogout} className="text-red-500">Logout</button></li>

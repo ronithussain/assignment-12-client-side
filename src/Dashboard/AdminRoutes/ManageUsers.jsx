@@ -25,10 +25,11 @@ const ManageUsers = () => {
 
     const users = usersData?.result || [];
     const totalPages = usersData?.totalPages || 1;
+    console.log(users, 'all data to users ')
 
     const handlePageClick = (data) => {
         setCurrentPage(data.selected);
-        refetch(); 
+        refetch();
     };
 
     const handleMakeAdmin = id => {
@@ -90,13 +91,14 @@ const ManageUsers = () => {
         });
     };
     console.log("Users Data:", usersData);
-console.log("Users Array:", users);
+    console.log("Users Array:", users);
 
     return (
         <div>
             <h3 className='text-3xl'>Total Users: {users.length}</h3>
 
             <div>
+                {/* search input */}
                 <div className="overflow-x-auto mt-8 w-full">
                     <input
                         type="text"
@@ -113,7 +115,6 @@ console.log("Users Array:", users);
                                 <th>
                                     #
                                 </th>
-                                <th>User Profile</th>
                                 <th>User Name</th>
                                 <th>User Email</th>
                                 <th>Make Admin</th>
@@ -124,22 +125,11 @@ console.log("Users Array:", users);
                         </thead>
                         <tbody>
                             {
-                                users?.map((user, index) => <tr key={user._id}>
-                                    <th>
+                                users?.map((user, index) => 
+                                <tr key={user._id} className="hover:bg-gray-50">
+                                    <th className="text-[#1D84B5]">
                                         {index + 1 + currentPage * usersPerPage}
                                     </th>
-                                    <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle h-12 w-12">
-                                                    <img
-                                                        src={user.photoURL}
-                                                    
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
                                     <td>{user.name}</td>
                                     <td>
                                         {user.email}

@@ -9,13 +9,13 @@ import { ImProfile } from "react-icons/im";
 const DashBoard = () => {
     // TODO: get isAdmin value from the database
     const [isAdmin] = useAdmin();
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);// sidebar 1st of al false thakbe
 
     return (
         <div className="flex flex-col md:flex-row">
             {/* Sidebar Toggle Button for Small Screens */}
             <button
-                className="md:hidden p-4 text-2xl bg-orange-400 text-white"
+                className="md:hidden p-4 text-2xl bg-[#1D84B5] text-white"
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             >
                 <FaBars />

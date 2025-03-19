@@ -48,7 +48,7 @@ const MyPost = () => {
                 <div className="overflow-x-auto mt-8 w-full">
                     <table className="table ">
                         {/* head */}
-                        <thead className="bg-orange-300 border-4 border-orange-400">
+                        <thead className="bg-[#1D84B5] text-white/80">
                             <tr>
                                 <th>
                                     #
@@ -63,8 +63,9 @@ const MyPost = () => {
                         </thead>
                         <tbody>
                             {
-                                myPost.map((post, index) => <tr key={post._id}>
-                                    <th>
+                                myPost.map((post, index) => 
+                                <tr key={post._id} className="hover:bg-gray-50">
+                                    <th className="text-[#1D84B5]">
                                         {index + 1}
                                     </th>
                                     <td>
@@ -90,7 +91,7 @@ const MyPost = () => {
                                     <td>
                                         <button
                                             onClick={() => handleDelete(post._id)}
-                                            className="btn btn-ghost text-lg bg-orange-400 text-white"><FaTrash></FaTrash> </button>
+                                            className="btn btn-ghost text-lg bg-[#EF433F] text-white"><FaTrash></FaTrash> </button>
                                     </td>
                                 </tr>)
                             }

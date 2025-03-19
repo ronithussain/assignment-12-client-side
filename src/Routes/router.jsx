@@ -11,7 +11,7 @@ import Dashboard from "../Dashboard/Dashboard";
 import AddPost from "../Dashboard/AddPost";
 import MyPost from "../Dashboard/MyPost";
 import MyProfile from "../Dashboard/MyProfile";
-import MemberShip from "../pages/MemberShip";
+import Membership from "../pages/PaymentMembershipPage/Membership";
 import PrivateRoute from "./PrivateRoute";
 import PostDetails from "../pages/PostDetailsSection/PostDetails";
 import ViewComments from "../Dashboard/ViewComments";
@@ -19,6 +19,8 @@ import AdminProfile from "../Dashboard/AdminRoutes/AdminProfile";
 import ManageUsers from "../Dashboard/AdminRoutes/ManageUsers";
 import ReportedActivities from "../Dashboard/AdminRoutes/ReportedActivities";
 import MakeAnnouncement from "../Dashboard/AdminRoutes/MakeAnnouncement";
+import AdminRoute from "./AdminRoute";
+
 
   export const router = createBrowserRouter([
     {
@@ -32,7 +34,7 @@ import MakeAnnouncement from "../Dashboard/AdminRoutes/MakeAnnouncement";
         },
         {
             path: '/memberShip',
-            element: <PrivateRoute><MemberShip/></PrivateRoute>
+            element: <PrivateRoute><Membership/></PrivateRoute>
         },
         {
             path: '/login',
@@ -51,6 +53,7 @@ import MakeAnnouncement from "../Dashboard/AdminRoutes/MakeAnnouncement";
     {
       path: '/dashboard',
       element: <PrivateRoute><Dashboard/></PrivateRoute>,
+      errorElement: <ErrorPage></ErrorPage>,
       children: [
         {
           path: 'addPost',
@@ -62,29 +65,29 @@ import MakeAnnouncement from "../Dashboard/AdminRoutes/MakeAnnouncement";
         },
         {
           path: "comments/:postId",
-          element: <ViewComments />
+          element: <PrivateRoute><ViewComments /></PrivateRoute>
         },
         {
           path: 'myProfile',
-          element: <MyProfile></MyProfile>
+          element: <PrivateRoute><MyProfile/></PrivateRoute>
         },
 
         //admin routes start here---------------------------------
         {
           path: 'adminProfile',
-          element: <PrivateRoute><AdminProfile/></PrivateRoute>
+          element: <AdminRoute><AdminProfile/></AdminRoute>
         },
         {
           path: 'manageUsers',
-          element: <PrivateRoute><ManageUsers/></PrivateRoute>
+          element: <AdminRoute><ManageUsers/></AdminRoute>
         },
         {
           path: "reportedActivities",
-          element: <PrivateRoute><ReportedActivities /></PrivateRoute>
+          element: <AdminRoute><ReportedActivities/></AdminRoute>
         },
         {
           path: 'makeAnnouncement',
-          element: <MakeAnnouncement/>
+          element: <AdminRoute><MakeAnnouncement/></AdminRoute>
         },
       ]
     },

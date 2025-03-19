@@ -5,7 +5,7 @@ import useAuth from '../hooks/useAuth';
 
 // Create axios instance
 export const axiosSecure = axios.create({
-    baseURL: 'https://assignment-12-server-side-wine.vercel.app'
+    baseURL: 'https://assignment-12-server-side-steel.vercel.app'
 });
 
 const useAxiosSecure = () => {
