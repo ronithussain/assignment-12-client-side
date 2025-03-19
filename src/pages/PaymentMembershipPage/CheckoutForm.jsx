@@ -45,7 +45,7 @@ const CheckoutForm = ({amount}) => {
 
     }
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="max-w-5xl mx-auto">
             <CardElement
                 options={{
                     style: {

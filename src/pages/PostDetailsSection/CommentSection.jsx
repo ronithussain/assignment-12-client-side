@@ -10,7 +10,7 @@ const CommentSection = ({ postId, user }) => {
     const axiosPublic = useAxiosPublic();
 
 
-    const { data: comments = [], isLoading } = useQuery({
+    const { data: commentsData = [], isLoading } = useQuery({
         queryKey: ['comments', postId],
         queryFn: async () => {
             const res = await axiosPublic.get(`/comments/${postId}`)
@@ -18,7 +18,9 @@ const CommentSection = ({ postId, user }) => {
             return res.data;
         }
     });
+    const comments = commentsData?.result || [];
     console.log(postId)
+    console.log(comments);
 
 
     const commentMutation = useMutation({
@@ -51,7 +53,7 @@ const CommentSection = ({ postId, user }) => {
         return <LoadingSpinner></LoadingSpinner>;
     }
     return (
-        <div className="mt-6">
+        <div className="my-6">
 
             <h3 className="text-lg font-semibold mb-2">Comments: ( {comments?.length || 0} )</h3>
 

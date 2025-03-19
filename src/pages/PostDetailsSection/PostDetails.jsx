@@ -15,7 +15,7 @@ const PostDetails = () => {
     const { user } = useAuth();
 
     // Fetch Post Details
-    const { data: post, isLoading, isError,  } = useQuery({
+    const { data: post, isLoading, isError, } = useQuery({
         queryKey: ["post", id],
         queryFn: async () => {
             const res = await axiosPublic.get(`/post-details/${id}`);
@@ -39,7 +39,7 @@ const PostDetails = () => {
     if (isError || !post) return <p className="text-center text-red-500">Something went wrong!</p>;
 
     return (
-        <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg my-20">
+        <div className="max-w-5xl mx-auto sm:p-6 p-2 bg-white shadow-lg rounded-lg my-6">
             {/* Author Info */}
             <div className="flex items-center gap-3">
                 <img src={post?.authorImage} alt="Author" className="w-12 h-12 rounded-full border-2 border-gray-300" />
@@ -54,6 +54,15 @@ const PostDetails = () => {
             {/* Post Content */}
             <h1 className="text-3xl font-bold mt-5">{post?.postTitle}</h1>
             <p className="text-gray-700 mt-3 leading-relaxed">{post?.postDescription}</p>
+
+            {/* Post image */}
+            {post?.image && (
+                <img
+                    src={post.image}
+                    alt="Post Image"
+                    className="w-full mt-1 h-auto max-h-[500px] object-cover rounded-md"
+                />
+            )}
 
             {/* Tags Section */}
             {post?.tag && (
@@ -90,7 +99,7 @@ const PostDetails = () => {
             </div>
 
             {/* Comment Section */}
-            <CommentSection postId={post._id}  user={user} />
+            <CommentSection postId={post._id} user={user} />
         </div>
     );
 };

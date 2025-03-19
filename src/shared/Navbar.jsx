@@ -33,7 +33,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="fixed z-50 text-white bg-opacity-80 backdrop-blur-md bg-black/20 navbar sm:px-4 px-1 w-full">
+            <div className="fixed z-50 text-white bg-opacity-80 backdrop-blur-md bg-black/20 navbar sm:px-4 px-1 w-[100%]">
                 <div className="navbar-start">
                     <div className="dropdown lg:hidden">
                         <div tabIndex={0} role="button" className="btn btn-ghost">
@@ -54,31 +54,34 @@ const Navbar = () => {
                 </div>
 
                 {/* Search bar */}
-                <div className="relative w-[100%] mr-4 sm:mr-0">
+                <div className="relative w-full md:w-80 lg:w-96  mr-6 sm:mr-0">
                     <input
                         type="text"
                         placeholder="Search by title..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        className="bg-gray-800/50 backdrop-blur-2xl input input-md w-full pl-10 pr-4 py-2 rounded-lg border border-gray-700 focus:ring-2 focus:ring-gray-800 focus:border-gray-700 shadow-md"
+                        className="bg-gray-800/50 backdrop-blur-xl input sm:w-full pl-12 pr-4 sm:py-6 py-1 rounded-lg border border-gray-600 focus:ring-2 focus:ring-gray-500 focus:border-blue-500 shadow-lg transition duration-300 ease-in-out text-white placeholder-gray-400 sm:text-base text-sm"
                     />
-                    <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                        <FaSearch className="text-gray-500 w-5 h-5" />
+                    <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                        <FaSearch className="text-gray-400 w-4 h-4 sm:w-6 sm:h-6 " />
                     </div>
                 </div>
 
+
                 <div className="navbar-end flex">
                     {/* Notification Bell */}
-                    <div className="mr-4">
-                        <li className="relative">
-                            <FaBell className="sm:text-xl text-xs cursor-pointer hover:text-yellow-400 transition" />
-                            <span className="absolute -top-1 -right-2 bg-blue-500 text-xs px-1 rounded-full">
-                                {announcements.length > 0 && (
-                                    <span className="notification-badge"> + {announcements.length}</span>
-                                )}
-                            </span>
+                    <div className="relative mr-4">
+                        <li className="relative list-none">
+                            <FaBell className="text-xs sm:text-xl cursor-pointer text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-110" />
+
+                            {announcements.length > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md animate-bounce">
+                                    {announcements.length}
+                                </span>
+                            )}
                         </li>
                     </div>
+
 
                     {/* Desktop Menu */}
                     <div className="hidden lg:flex">
@@ -92,7 +95,7 @@ const Navbar = () => {
                         user ?
                             <div className="dropdown dropdown-end">
                                 <div tabIndex={0} className="avatar cursor-pointer">
-                                    <img src={user.photoURL} alt="Profile" className="w-12 h-12 sm:w-8 sm:h-8 rounded-full p-1 bg-gray-700" />
+                                    <img src={user.photoURL} alt="Profile" className="w-12 h-12 sm:w-8 sm:h-8 rounded-full p-1 bg-gray-700 object-cover" />
                                 </div>
                                 <ul tabIndex={0} className="dropdown-content menu shadow bg-gray-900/80 rounded-box w-40 mt-2 ">
                                     <li className="font-bold text-center">{user.displayName}</li>
