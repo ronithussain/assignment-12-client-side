@@ -160,7 +160,7 @@ const ManageUsers = () => {
                                     </td>
                                     <td>
                                         <button
-                                            onClick={() => handleDelete(user._id)}
+                                            onClick={() => handleDelete(user)}
                                             className="btn btn-ghost text-lg bg-[#EF433F] text-white">
                                             <FaTrash></FaTrash>
                                         </button>

@@ -14,8 +14,8 @@ const Membership = () => {
 
     return (
         <>
-            <div className="">
-                <div className='mx-auto text-center my-12 md:w-4/12'>
+            <div className=" lg:mt-36 md:mt-30 mt-22 lg:mb-12">
+                <div className='mx-auto text-center  md:w-4/12'>
                     <p className='text-yellow-600 mb-1'>---Payment Gateway---</p>
                     <h3 className='lg:text-4xl md:text-3xl uppercase border-y-4 py-4'>Payment Gateway</h3>
                 </div>

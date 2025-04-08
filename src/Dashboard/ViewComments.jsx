@@ -56,14 +56,16 @@ const ViewComments = () => {
         queryKey: ['comments', postId],
         queryFn: async () => {
             const res = await axiosSecure.get(`/comments/${postId}`);
-            const commentsWithStatus = res.data.map(comment => ({
+            const commentsWithStatus = res.data.result.map(comment => ({
                 ...comment,
                 reportStatus: false
             }));
             setCommentsWithReportStatus(commentsWithStatus);
-            return res.data;
+            console.log(commentsWithStatus);
+            return res.data.result;
         }
     });
+    console.log(comments, postId);
 
     if (isLoading) {
         return <LoadingSpinner />;

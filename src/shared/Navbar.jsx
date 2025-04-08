@@ -33,7 +33,7 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="fixed z-50 text-white bg-opacity-80 backdrop-blur-md bg-black/20 navbar sm:px-4 px-1 w-[100%]">
+            <div className="fixed top-0 z-50 text-white bg-opacity-80 backdrop-blur-md bg-black/20 navbar sm:px-4 px-1 w-[100%]">
                 <div className="navbar-start">
                     <div className="dropdown lg:hidden">
                         <div tabIndex={0} role="button" className="btn btn-ghost">
@@ -95,7 +95,7 @@ const Navbar = () => {
                         user ?
                             <div className="dropdown dropdown-end">
                                 <div tabIndex={0} className="avatar cursor-pointer">
-                                    <img src={user.photoURL} alt="Profile" className="w-12 h-12 sm:w-8 sm:h-8 rounded-full p-1 bg-gray-700 object-cover" />
+                                    <img src={user.photoURL} alt="Profile" className="w-6 h-6 sm:w-8 sm:h-8 rounded-full p-1 bg-gray-700 object-cover" />
                                 </div>
                                 <ul tabIndex={0} className="dropdown-content menu shadow bg-gray-900/80 rounded-box w-40 mt-2 ">
                                     <li className="font-bold text-center">{user.displayName}</li>

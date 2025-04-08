@@ -39,7 +39,7 @@ const PostDetails = () => {
     if (isError || !post) return <p className="text-center text-red-500">Something went wrong!</p>;
 
     return (
-        <div className="max-w-5xl mx-auto sm:p-6 p-2 bg-white shadow-lg rounded-lg my-6">
+        <div className="max-w-5xl mx-auto sm:p-6 p-2  bg-white shadow-lg rounded-lg lg:mt-36 md:mt-30 mt-22 lg:mb-12">
             {/* Author Info */}
             <div className="flex items-center gap-3">
                 <img src={post?.authorImage} alt="Author" className="w-12 h-12 rounded-full border-2 border-gray-300" />
@@ -52,7 +52,7 @@ const PostDetails = () => {
             </div>
 
             {/* Post Content */}
-            <h1 className="text-3xl font-bold mt-5">{post?.postTitle}</h1>
+            <h1 className="lg:text-3xl md:text-2xl text-xl font-bold mt-5">{post?.postTitle}</h1>
             <p className="text-gray-700 mt-3 leading-relaxed">{post?.postDescription}</p>
 
             {/* Post image */}

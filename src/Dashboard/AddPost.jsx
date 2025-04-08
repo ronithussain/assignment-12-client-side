@@ -82,7 +82,7 @@ const AddPost = () => {
     };
 
     return (
-        <div className="max-w-3xl mx-auto sm:p-6 p-3 bg-white rounded-lg shadow-lg">
+        <div className="max-w-3xl mx-auto sm:p-6 p-3 bg-white rounded-lg shadow-lg ">
             <h2 className="text-2xl font-bold text-center mb-4">Add a New Post</h2>
 
             {postCount >= 5 ? (
