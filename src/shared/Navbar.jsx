@@ -72,7 +72,7 @@ const Navbar = () => {
                     {/* Notification Bell */}
                     <div className="relative mr-4">
                         <li className="relative list-none">
-                            <FaBell className="text-xs sm:text-xl cursor-pointer text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-110" />
+                            <FaBell className="text-base sm:text-2xl cursor-pointer text--300 hover:text-yellow-400 transition duration-300 transform hover:scale-110" />
 
                             {announcements.length > 0 && (
                                 <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-md animate-bounce">
@@ -94,8 +94,8 @@ const Navbar = () => {
                     {
                         user ?
                             <div className="dropdown dropdown-end">
-                                <div tabIndex={0} className="avatar cursor-pointer">
-                                    <img src={user.photoURL} alt="Profile" className="w-6 h-6 sm:w-8 sm:h-8 rounded-full p-1 bg-gray-700 object-cover" />
+                                <div tabIndex={0} className="avatar cursor-pointer w-16 h-16">
+                                    <img src={user.photoURL} alt="Profile" className="sm:w-10 sm:h-10 w-8 h-8 rounded-full p-1 bg-gray-700 object-cover" />
                                 </div>
                                 <ul tabIndex={0} className="dropdown-content menu shadow bg-gray-900/80 rounded-box w-40 mt-2 ">
                                     <li className="font-bold text-center">{user.displayName}</li>

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import SocialLogin from "./SocialLogin";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 
 
@@ -14,7 +14,7 @@ const Login = () => {
     const location = useLocation();
 
     const from = location.state?.from?.pathname || '/';
-    console.log('in the location login page',location.state)
+    console.log('in the location login page', location.state)
 
 
     const handleLogin = (e) => {
@@ -30,22 +30,30 @@ const Login = () => {
                 Swal.fire({
                     title: "User Login Successful.css",
                     showclassName: {
-                      popup: `
+                        popup: `
                         animate__animated
                         animate__fadeInUp
                         animate__faster
                       `
                     },
                     hideclassName: {
-                      popup: `
+                        popup: `
                         animate__animated
                         animate__fadeOutDown
                         animate__faster
                       `
                     }
-                  });
-                  navigate(from, {replace: true});
+                });
+                navigate(from, { replace: true });
             })
+            .catch(error => {
+                console.error("Login Error:", error.message); 
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: error.message,
+                });
+            });
     }
 
     return (

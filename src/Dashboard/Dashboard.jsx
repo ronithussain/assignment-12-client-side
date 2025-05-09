@@ -22,7 +22,7 @@ const DashBoard = () => {
             </button>
 
             {/* Dashboard Sidebar */}
-            <div className={`absolute md:relative z-10 min-h-screen bg-[#627288] w-80 transition-all duration-300 
+            <div className={`absolute md:relative z-10 min-h-screen bg-[#627288] sm:w-80  transition-all duration-300 
                 ${isSidebarOpen ? "block" : "hidden"} md:block`}
             >
                 <ul className="menu w-full space-y-4 p-4">
@@ -62,7 +62,9 @@ const DashBoard = () => {
                                     </NavLink>
                                 </li>
                             </>
+
                             :
+
                             <>
                                 <li>
                                     <NavLink to="/dashboard/addPost"
